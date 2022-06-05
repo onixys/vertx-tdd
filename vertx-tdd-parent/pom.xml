@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.onixys</groupId>
+        <artifactId>vertx-tdd</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>vertx-tdd-parent</artifactId>
+
+    <name>Vertx :: TDD :: Parent</name>
+    <description>Vertx TDD Parent</description>
+    <packaging>pom</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!--    J A V A    V E R S I O N                                                   -->
+        <!-- ............................................................................. -->
+        <java.version>11</java.version>
+
+        <!--       P L U G I N S    V E R S I O N      -->
+        <!-- ............................................................................. -->
+        <maven-plugin-build-helper.version>3.0.0</maven-plugin-build-helper.version>
+        <maven-plugin-clean.version>3.1.0</maven-plugin-clean.version>
+        <maven-plugin-compiler.version>3.8.0</maven-plugin-compiler.version>
+        <maven-plugin-download.version>1.4.1</maven-plugin-download.version>
+        <maven-plugin-deploy.version>3.0.0-M1</maven-plugin-deploy.version>
+        <maven-plugin-enforcer.version>3.0.0-M2</maven-plugin-enforcer.version>
+        <maven-plugin-install.version>3.0.0-M1</maven-plugin-install.version>
+        <maven-plugin-javadoc.version>3.1.1</maven-plugin-javadoc.version>
+        <maven-plugin-jar.version>3.1.1</maven-plugin-jar.version>
+        <maven-plugin-resources.version>3.1.0</maven-plugin-resources.version>
+        <maven-plugin-source.version>3.1.0</maven-plugin-source.version>
+        <maven-plugin-shade.version>3.2.1</maven-plugin-shade.version>
+        <maven-plugin-site.version>3.7.1</maven-plugin-site.version>
+        <maven-plugin-sonar.version>3.7.0.1746</maven-plugin-sonar.version>
+        <maven-plugin-surefire.version>2.22.2</maven-plugin-surefire.version>
+        <maven-plugin-war.version>3.2.2</maven-plugin-war.version>
+        <maven-plugin-vertx.version>1.0.20</maven-plugin-vertx.version>
+
+        <!--       D E P E N D E N C I S    V E R S I O N                                  -->
+        <!-- ............................................................................. -->
+        <apache-commons.version>3.12.0</apache-commons.version>
+        <javafaker.version>1.0.2</javafaker.version>
+        <hamcrest.version>2.2</hamcrest.version>
+        <mockito.version>4.6.1</mockito.version>
+        <netty.version>4.1.77.Final</netty.version>
+        <vertx.version>4.3.1</vertx.version>
+
+        <vertx.main.class>io.vertx.core.Launcher</vertx.main.class>
+        <vertx.main.verticle>verticle-package</vertx.main.verticle>
+
+        <!--       L O G G I N G    D E P E N D E N C I S    V E R S I O N                 -->
+        <!-- ............................................................................. -->
+        <slf4j.version>1.7.36</slf4j.version>
+        <logback.version>1.2.3</logback.version>
+
+        <!--       T E S T I N G    D E P E N D E N C I S    V E R S I O N                 -->
+        <!-- ............................................................................. -->
+        <assertj.version>3.12.2</assertj.version>
+        <junit.jupiter.version>5.8.2</junit.jupiter.version>
+
+        <!--mvn versions:display-dependency-updates-->
+        <!--mvn versions:display-plugin-updates-->
+    </properties>
+
+    <!-- =============================================================================== -->
+    <!--       D E P E N D E N C I E S    M A N A G E M E N T                            -->
+    <!-- =============================================================================== -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- Internal Parent Dependencies -->
+            <dependency>
+                <groupId>com.onixys</groupId>
+                <artifactId>vertx-tdd-parent-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- Vert.x Dependencies -->
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.vertx</groupId>
+                <artifactId>vertx-dependencies</artifactId>
+                <version>${vertx.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Java Faker Dependencies -->
+            <dependency>
+                <groupId>com.github.javafaker</groupId>
+                <artifactId>javafaker</artifactId>
+                <version>${javafaker.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.yaml</groupId>
+                        <artifactId>snakeyaml</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!-- Apache commons lang3 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${apache-commons.version}</version>
+            </dependency>
+
+            <!-- Logging Dependencies -->
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+
+            <!-- Testing Dependencies -->
+            <dependency>
+                <groupId>io.vertx</groupId>
+                <artifactId>vertx-junit5</artifactId>
+                <version>${vertx.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${assertj.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.hamcrest</groupId>
+                <artifactId>hamcrest</artifactId>
+                <version>${hamcrest.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- =============================================================================== -->
+    <!--       B U I D                                                                   -->
+    <!-- =============================================================================== -->
+    <build>
+        <resources>
+            <resource>
+                <filtering>true</filtering>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>**/*.properties</exclude>
+                    <exclude>**/*.xml</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources/images</directory>
+                <!-- (Optional) Directory to copy to. By default uses the option `outputDirectory` -->
+                <targetPath>${asciidoctor.configuration.images-dir}</targetPath>
+                <!-- (Optional) NOTE: SVN, GIT and other version control files are excluded by default, there's no need to add them -->
+                <excludes>
+                    <exclude>**/.txt</exclude>
+                </excludes>
+                <!-- (Optional) If not set, includes all files but default exceptions mentioned -->
+                <includes>
+                    <include>**/*.png</include>
+                </includes>
+            </resource>
+        </resources>
+
+        <pluginManagement>
+            <plugins>
+
+                <!-- ==================================================================== -->
+                <!--       M A V E N    B U I L D E R    H E L P E R    P L U G I N       -->
+                <!-- ==================================================================== -->
+                <!--force discovery of generated classes-->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>${maven-plugin-build-helper.version}</version>
+                    <executions>
+                        <execution>
+                            <id>add-source</id>
+                            <phase>generate-sources</phase>
+                            <goals>
+                                <goal>add-source</goal>
+                            </goals>
+                            <configuration>
+                                <sources>
+                                    <source>target/generated-sources/avro</source>
+                                </sources>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- ===================================================== -->
+                <!--       M A V E N    J A V A D O C    P L U G I N       -->
+                <!-- ===================================================== -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${maven-plugin-javadoc.version}</version>
+                    <executions>
+                        <execution>
+                            <id>attach-javadocs</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- ========================================================= -->
+                <!--       M A V E N    R E S O U R C E S    P L U G I N       -->
+                <!-- ========================================================= -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${maven-plugin-resources.version}</version>
+                    <executions>
+                        <execution>
+                            <id>copy-config</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${basedir}/target/conf</outputDirectory>
+                                <resources>
+                                    <resource>
+                                        <directory>conf</directory>
+                                        <filtering>true</filtering>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- ======================================================= -->
+                <!--       M A V E N    S H A D E    P L U G I N             -->
+                <!-- ======================================================= -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>${maven-plugin-shade.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>shade</goal>
+                            </goals>
+                            <configuration>
+                                <filters>
+                                    <filter>
+                                        <excludes>
+                                            <exclude>META-INF/*.SF</exclude>
+                                            <exclude>META-INF/*.DSA</exclude>
+                                            <exclude>META-INF/*.RSA</exclude>
+                                        </excludes>
+                                    </filter>
+                                </filters>
+                                <transformers>
+                                    <transformer
+                                            implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                        <manifestEntries>
+                                            <Main-Class>${vertx.main.class}</Main-Class>
+                                            <Main-Verticle>${vertx.main.verticle}</Main-Verticle>
+                                        </manifestEntries>
+                                    </transformer>
+                                    <transformer
+                                            implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                        <resource>META-INF/services/io.vertx.core.spi.VerticleFactory</resource>
+                                    </transformer>
+                                </transformers>
+                                <artifactSet>
+                                </artifactSet>
+                                <outputFile>${project.build.directory}/${project.artifactId}-${project.version}-fat.jar
+                                </outputFile>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- =================================================== -->
+                <!--       M A V E N    S O U R C E    P L U G I N       -->
+                <!-- =================================================== -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${maven-plugin-source.version}</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <!-- ================================================= -->
+                <!--       M A V E N    V E R T X    P L U G I N       -->
+                <!-- ================================================= -->
+                <plugin>
+                    <groupId>io.reactiverse</groupId>
+                    <artifactId>vertx-maven-plugin</artifactId>
+                    <version>${maven-plugin-vertx.version}</version>
+                    <executions>
+                        <execution>
+                            <id>vmp</id>
+                            <goals>
+                                <goal>initialize</goal>
+                                <goal>package</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <redeploy>true</redeploy>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <!-- ======================================================= -->
+            <!--       M A V E N    C O M P I L E R    P L U G I N       -->
+            <!-- ======================================================= -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-plugin-compiler.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <forceJavacCompilerUse>true</forceJavacCompilerUse>
+                </configuration>
+            </plugin>
+
+            <!-- ======================================================= -->
+            <!--       M A V E N    E N F O R C E R    P L U G I N       -->
+            <!-- ======================================================= -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>${maven-plugin-enforcer.version}</version>
+                <executions>
+                    <execution>
+                        <id>enforce-maven</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>3.6.3</version>
+                                </requireMavenVersion>
+                                <requireJavaVersion>
+                                    <message>Project must be compiled with Java ${java.version} or higher</message>
+                                    <version>${java.version}</version>
+                                </requireJavaVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- ======================================================= -->
+            <!--       M A V E N    C L E A N    P L U G I N             -->
+            <!-- ======================================================= -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>${maven-plugin-clean.version}</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>src/main/webapp</directory>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+
+            <!-- ======================================================= -->
+            <!--       M A V E N    D E P L O Y    P L U G I N           -->
+            <!-- ======================================================= -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>${maven-plugin-deploy.version}</version>
+            </plugin>
+
+            <!-- ======================================================= -->
+            <!--       M A V E N    I N S T A L L    P L U G I N         -->
+            <!-- ======================================================= -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>${maven-plugin-install.version}</version>
+            </plugin>
+
+            <!-- ============================================= -->
+            <!--       M A V E N    J A R    P L U G I N       -->
+            <!-- ============================================= -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven-plugin-jar.version}</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <!-- ======================================================= -->
+            <!--       M A V E N    S I T E    P L U G I N               -->
+            <!-- ======================================================= -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>${maven-plugin-site.version}</version>
+            </plugin>
+
+            <!-- ======================================================= -->
+            <!--       M A V E N    S O N A R    P L U G I N             -->
+            <!-- ======================================================= -->
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>${maven-plugin-sonar.version}</version>
+            </plugin>
+
+            <!-- ======================================================= -->
+            <!--       M A V E N    S U R E F I R E    P L U G I N       -->
+            <!-- ======================================================= -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-plugin-surefire.version}</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*IT.java</exclude>
+                        <exclude>**/*IntegrationTest.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <!-- ============================================= -->
+            <!--       M A V E N    W A R    P L U G I N       -->
+            <!-- ============================================= -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${maven-plugin-war.version}</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- =============================================================================== -->
+    <!--       M O D U L E S                                                             -->
+    <!-- =============================================================================== -->
+    <modules>
+
+    </modules>
+
+</project>
